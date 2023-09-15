@@ -97,14 +97,13 @@ async def execute_agent_task_step(
         )
         step = await agent.run_step(step)
         step.output = "Task completed"
-        step.is_last = True
     else:
         steps = await agent.db.list_steps(task_id)
         artifacts = await agent.db.list_artifacts(task_id)
         step = steps[-1]
         step.artifacts = artifacts
         step.output = "No more steps to run."
-        step.is_last = True
+    step.is_last = True
     if isinstance(step.status, Status):
         step.status = step.status.value
     return JSONResponse(content=step.dict(), status_code=200)

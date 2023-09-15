@@ -47,9 +47,7 @@ def run(task: str):
     print("Running agent")
     steps = plan(task)
     execute_plan(steps)
-    # check for artifacts in workspace
-    items = glob.glob(os.path.join(workspace, "*"))
-    if items:
+    if items := glob.glob(os.path.join(workspace, "*")):
         artifacts = []
         print(f"Found {len(items)} artifacts in workspace")
         for item in items:
